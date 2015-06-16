@@ -1,10 +1,14 @@
 package unitn.lifecoach.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import unitn.lifecoach.dao.LifeCoachDao;
+
 import java.util.Date;
 import java.util.List;
-import unitn.lifecoach.dao.*;
+
 
 /**
  * The persistent class for the person database table.

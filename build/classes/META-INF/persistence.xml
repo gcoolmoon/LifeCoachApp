@@ -12,6 +12,7 @@
 		<class>unitn.lifecoach.model.Lifestylemeasuremnt</class>
 		<class>unitn.lifecoach.model.Person</class>
 		<class>unitn.lifecoach.model.Reminder</class>
+		
 	<properties>
 	<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 		 <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/lifecoach" />
