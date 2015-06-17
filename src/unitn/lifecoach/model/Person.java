@@ -1,9 +1,13 @@
 package unitn.lifecoach.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import java.util.Date;
 import java.util.List;
+
 import unitn.lifecoach.dao.*;
 
 /**
@@ -12,6 +16,7 @@ import unitn.lifecoach.dao.*;
  */
 @Entity
 @NamedQuery(name="Person.findAll", query="SELECT p FROM Person p")
+@XmlRootElement 
 public class Person implements Serializable {
 	private static final long serialVersionUID = 1L;
 
