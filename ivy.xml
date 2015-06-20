@@ -20,7 +20,7 @@
 <ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
     <info
-        organisation="Virtual Life Coach"
+        organisation="Life Coach"
         module="Final Project"
         status="integration">
 	</info>
@@ -54,9 +54,13 @@
         <dependency org="com.fasterxml.jackson.jaxrs" name="jackson-jaxrs-json-provider" rev="2.4.2">
             <artifact name="jackson-jaxrs-json-provider" type="jar"/>
         </dependency>
+        <dependency org="com.eclipsesource.minimal-json" name="minimal-json" rev="0.9.1"/>
+        
         <dependency org="com.fasterxml.jackson.jaxrs" name="jackson-jaxrs-base" rev="2.4.2">
             <artifact name="jackson-jaxrs-base" type="jar"/>
         </dependency>
+        <dependency org="org.codehaus.jackson" name="jackson-mapper-asl" rev="1.5.0"/>
+        <dependency org="javax.mail" name="mail" rev="1.4"/>
         
         <dependency org="org.xerial" name="sqlite-jdbc" rev="3.7.2"/>
         <dependency org="org.mongodb" name="mongo-java-driver" rev="2.12.3"/>
@@ -67,6 +71,8 @@
         <dependency org="org.eclipse.persistence" name="org.eclipse.persistence.jpa" rev="2.5.2"/>
         
         
+        
+        <dependency org="org.twitter4j" name="twitter4j-core" rev="4.0.2"/>
         
         <dependency org="net.sf.dozer" name="dozer" rev="5.5.1"/>
         <dependency org="joda-time" name="joda-time" rev="2.4"/>
