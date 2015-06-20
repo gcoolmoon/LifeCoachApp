@@ -1,7 +1,11 @@
 package unitn.lifecoach.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import unitn.lifecoach.dao.LifeCoachDao;
+
 import java.util.List;
 
 
@@ -99,5 +103,40 @@ public class Healthmeasurement implements Serializable {
 
 		return healthmeasurehistory;
 	}
-
+	public static List<Healthmeasurement> getAll() {
+		EntityManager em = LifeCoachDao.instance.createEntityManager();
+	    List<Healthmeasurement> list = em.createNamedQuery("Healthmeasurement.findAll", Healthmeasurement.class).getResultList();
+	    LifeCoachDao.instance.closeConnections(em);
+	    return list;
+	}
+	
+	public static Healthmeasurement saveHealthmeasurement(Healthmeasurement hm) {
+		EntityManager em = LifeCoachDao.instance.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		em.persist(hm);
+		tx.commit();
+	    LifeCoachDao.instance.closeConnections(em);
+	    return hm;
+	}
+	
+	public static Healthmeasurement updateheHealthmeasurement(Healthmeasurement hm) {
+		EntityManager em = LifeCoachDao.instance.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		hm=em.merge(hm);
+		tx.commit();
+	    LifeCoachDao.instance.closeConnections(em);
+	    return hm;
+	}
+	
+	public static void removedHealthmeasurement(Healthmeasurement hm) {
+		EntityManager em = LifeCoachDao.instance.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+	    hm=em.merge(hm);
+	    em.remove(hm);
+	    tx.commit();
+	    LifeCoachDao.instance.closeConnections(em);
+	}
 }

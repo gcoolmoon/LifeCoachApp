@@ -1,8 +1,13 @@
 package unitn.lifecoach.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import unitn.lifecoach.dao.LifeCoachDao;
+
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -47,6 +52,42 @@ public class Awarenessinformation implements Serializable {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	public static List<Awarenessinformation> getAll() {
+		EntityManager em = LifeCoachDao.instance.createEntityManager();
+	    List<Awarenessinformation> list = em.createNamedQuery("Awarenessinformation.findAll", Awarenessinformation.class).getResultList();
+	    LifeCoachDao.instance.closeConnections(em);
+	    return list;
+	}
+	
+	public static Awarenessinformation saveAwarenessinformation(Awarenessinformation a) {
+		EntityManager em = LifeCoachDao.instance.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		em.persist(a);
+		tx.commit();
+	    LifeCoachDao.instance.closeConnections(em);
+	    return a;
+	}
+	
+	public static Awarenessinformation updateAwarenessinformation(Awarenessinformation a) {
+		EntityManager em = LifeCoachDao.instance.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		a=em.merge(a);
+		tx.commit();
+	    LifeCoachDao.instance.closeConnections(em);
+	    return a;
+	}
+	
+	public static void removeAwarenessinformation(Awarenessinformation a) {
+		EntityManager em = LifeCoachDao.instance.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+	    a=em.merge(a);
+	    em.remove(a);
+	    tx.commit();
+	    LifeCoachDao.instance.closeConnections(em);
 	}
 
 }

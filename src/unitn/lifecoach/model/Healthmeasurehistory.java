@@ -1,8 +1,11 @@
 package unitn.lifecoach.model;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
-import java.util.Date;
+
+import unitn.lifecoach.dao.LifeCoachDao;
 
 
 /**
@@ -15,10 +18,9 @@ public class Healthmeasurehistory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int healthmeasureHistoryid;
+	private String healthmeasureHistoryid;
 
-	@Temporal(TemporalType.DATE)
-	private Date date;
+	private int date;
 
 	private int healthValue;
 
@@ -37,19 +39,19 @@ public class Healthmeasurehistory implements Serializable {
 	public Healthmeasurehistory() {
 	}
 
-	public int getHealthmeasureHistoryid() {
+	public String getHealthmeasureHistoryid() {
 		return this.healthmeasureHistoryid;
 	}
 
-	public void setHealthmeasureHistoryid(int healthmeasureHistoryid) {
+	public void setHealthmeasureHistoryid(String healthmeasureHistoryid) {
 		this.healthmeasureHistoryid = healthmeasureHistoryid;
 	}
 
-	public Date getDate() {
+	public int getDate() {
 		return this.date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(int date) {
 		this.date = date;
 	}
 
@@ -84,5 +86,40 @@ public class Healthmeasurehistory implements Serializable {
 	public void setPerson(Person person) {
 		this.person = person;
 	}
-
+	public static List<Healthmeasurehistory> getAll() {
+		EntityManager em = LifeCoachDao.instance.createEntityManager();
+	    List<Healthmeasurehistory> list = em.createNamedQuery("Healthmeasurehistory.findAll", Healthmeasurehistory.class).getResultList();
+	    LifeCoachDao.instance.closeConnections(em);
+	    return list;
+	}
+	
+	public static Healthmeasurehistory saveHealthmeasurehistory(Healthmeasurehistory hmh) {
+		EntityManager em = LifeCoachDao.instance.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		em.persist(hmh);
+		tx.commit();
+	    LifeCoachDao.instance.closeConnections(em);
+	    return hmh;
+	}
+	
+	public static Healthmeasurehistory updateHealthgoal(Healthmeasurehistory hmh) {
+		EntityManager em = LifeCoachDao.instance.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		hmh=em.merge(hmh);
+		tx.commit();
+	    LifeCoachDao.instance.closeConnections(em);
+	    return hmh;
+	}
+	
+	public static void removedHealthmeasurehistory(Healthmeasurehistory hmh) {
+		EntityManager em = LifeCoachDao.instance.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+	    hmh=em.merge(hmh);
+	    em.remove(hmh);
+	    tx.commit();
+	    LifeCoachDao.instance.closeConnections(em);
+	}
 }

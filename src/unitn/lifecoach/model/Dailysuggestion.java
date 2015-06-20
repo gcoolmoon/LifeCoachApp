@@ -1,7 +1,11 @@
 package unitn.lifecoach.model;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
+
+import unitn.lifecoach.dao.LifeCoachDao;
 
 
 /**
@@ -70,5 +74,40 @@ public class Dailysuggestion implements Serializable {
 	public void setLifestylemeasuremnt(Lifestylemeasuremnt lifestylemeasuremnt) {
 		this.lifestylemeasuremnt = lifestylemeasuremnt;
 	}
-
+	public static List<Dailysuggestion> getAll() {
+		EntityManager em = LifeCoachDao.instance.createEntityManager();
+	    List<Dailysuggestion> list = em.createNamedQuery("Dailysuggestion.findAll", Dailysuggestion.class).getResultList();
+	    LifeCoachDao.instance.closeConnections(em);
+	    return list;
+	}
+	
+	public static Dailysuggestion saveAwarenessinformation(Dailysuggestion d) {
+		EntityManager em = LifeCoachDao.instance.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		em.persist(d);
+		tx.commit();
+	    LifeCoachDao.instance.closeConnections(em);
+	    return d;
+	}
+	
+	public static Dailysuggestion updateAwarenessinformation(Dailysuggestion d) {
+		EntityManager em = LifeCoachDao.instance.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		d=em.merge(d);
+		tx.commit();
+	    LifeCoachDao.instance.closeConnections(em);
+	    return d;
+	}
+	
+	public static void removedDailysuggestion(Dailysuggestion d) {
+		EntityManager em = LifeCoachDao.instance.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+	    d=em.merge(d);
+	    em.remove(d);
+	    tx.commit();
+	    LifeCoachDao.instance.closeConnections(em);
+	}
 }
