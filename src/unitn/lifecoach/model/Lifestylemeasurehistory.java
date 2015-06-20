@@ -1,8 +1,13 @@
 package unitn.lifecoach.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import unitn.lifecoach.dao.LifeCoachDao;
+
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -84,5 +89,40 @@ public class Lifestylemeasurehistory implements Serializable {
 	public void setPerson(Person person) {
 		this.person = person;
 	}
-
+	public static List<Lifestylemeasurehistory> getAll() {
+		EntityManager em = LifeCoachDao.instance.createEntityManager();
+	    List<Lifestylemeasurehistory> list = em.createNamedQuery("Lifestylemeasurehistory.findAll", Lifestylemeasurehistory.class).getResultList();
+	    LifeCoachDao.instance.closeConnections(em);
+	    return list;
+	}
+	
+	public static Lifestylemeasurehistory saveLifestylemeasurehistory(Lifestylemeasurehistory lmh) {
+		EntityManager em = LifeCoachDao.instance.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		em.persist(lmh);
+		tx.commit();
+	    LifeCoachDao.instance.closeConnections(em);
+	    return lmh;
+	}
+	
+	public static Lifestylemeasurehistory updateLifestylemeasurehistory(Lifestylemeasurehistory lmh) {
+		EntityManager em = LifeCoachDao.instance.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		lmh=em.merge(lmh);
+		tx.commit();
+	    LifeCoachDao.instance.closeConnections(em);
+	    return lmh;
+	}
+	
+	public static void removedLifestylemeasurehistory(Lifestylemeasurehistory lmh) {
+		EntityManager em = LifeCoachDao.instance.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+	    lmh=em.merge(lmh);
+	    em.remove(lmh);
+	    tx.commit();
+	    LifeCoachDao.instance.closeConnections(em);
+	}
 }

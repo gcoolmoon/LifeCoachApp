@@ -1,7 +1,11 @@
 package unitn.lifecoach.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import unitn.lifecoach.dao.LifeCoachDao;
+
 import java.util.List;
 
 
@@ -82,6 +86,42 @@ public class Caregiiver implements Serializable {
 		person.setCaregiiver(null);
 
 		return person;
+	}
+	public static List<Caregiiver> getAll() {
+		EntityManager em = LifeCoachDao.instance.createEntityManager();
+	    List<Caregiiver> list = em.createNamedQuery("Caregiiver.findAll", Caregiiver.class).getResultList();
+	    LifeCoachDao.instance.closeConnections(em);
+	    return list;
+	}
+	
+	public static Caregiiver saveCaregiiver(Caregiiver c) {
+		EntityManager em = LifeCoachDao.instance.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		em.persist(c);
+		tx.commit();
+	    LifeCoachDao.instance.closeConnections(em);
+	    return c;
+	}
+	
+	public static Caregiiver updateCaregiiver(Caregiiver c) {
+		EntityManager em = LifeCoachDao.instance.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		c=em.merge(c);
+		tx.commit();
+	    LifeCoachDao.instance.closeConnections(em);
+	    return c;
+	}
+	
+	public static void removeCaregiiver(Caregiiver c) {
+		EntityManager em = LifeCoachDao.instance.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+	    c=em.merge(c);
+	    em.remove(c);
+	    tx.commit();
+	    LifeCoachDao.instance.closeConnections(em);
 	}
 
 }
